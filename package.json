@@ -1,0 +1,35 @@
+{
+  "name": "ecommerce-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^3.8.1",
+    "@stripe/stripe-js": "^7.7.0",
+    "axios": "^1.11.0",
+    "framer-motion": "^12.23.9",
+    "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.10.3",
+    "icons": "^1.0.0",
+    "jspdf": "^3.0.1",
+    "lucide-react": "^0.525.0",
+    "next": "15.4.3",
+    "react": "^19.1.0",
+    "react-dom": "19.1.0",
+    "react-hook-form": "^7.61.1",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "recharts": "^3.1.0",
+    "stripe": "^18.3.0",
+    "swiper": "^11.2.10",
+    "zustand": "^5.0.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4"
+  }
+}

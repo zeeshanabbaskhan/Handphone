@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout & Payment</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .checkout-container {
+            background-color: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 2.5rem; /* Increased padding for a more spacious feel */
+        }
+        @media (min-width: 1024px) {
+            .checkout-container {
+                flex-direction: row;
+                padding: 3rem;
+            }
+        }
+        .form-input {
+            @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800 shadow-sm;
+        }
+        .payment-option {
+            @apply flex items-center p-4 border border-gray-300 rounded-xl cursor-pointer hover:border-blue-500 transition-colors;
+        }
+        .place-order-btn {
+            background: linear-gradient(to right, #4CAF50, #8BC34A); /* Green gradient */
+            @apply text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all text-xl mt-8 w-full;
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="lg:w-2/3 pr-0 lg:pr-10 mb-10 lg:mb-0">
+            <h2 class="text-4xl font-bold text-gray-900 mb-8 text-center lg:text-left">Checkout</h2>
+
+            <!-- Shipping Information Section -->
+            <div class="mb-10 p-6 bg-gray-50 rounded-xl shadow-sm">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Shipping Information</h3>
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="full-name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                        <input type="text" id="full-name" placeholder="John Doe" class="form-input">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                        <input type="email" id="email" placeholder="john.doe@example.com" class="form-input">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="address" class="block text-gray-700 font-medium mb-2">Street Address</label>
+                        <input type="text" id="address" placeholder="123 Main St" class="form-input">
+                    </div>
+                    <div>
+                        <label for="city" class="block text-gray-700 font-medium mb-2">City</label>
+                        <input type="text" id="city" placeholder="New York" class="form-input">
+                    </div>
+                    <div>
+                        <label for="state" class="block text-gray-700 font-medium mb-2">State / Province</label>
+                        <input type="text" id="state" placeholder="NY" class="form-input">
+                    </div>
+                    <div>
+                        <label for="zip" class="block text-gray-700 font-medium mb-2">Zip Code</label>
+                        <input type="text" id="zip" placeholder="10001" class="form-input">
+                    </div>
+                    <div>
+                        <label for="country" class="block text-gray-700 font-medium mb-2">Country</label>
+                        <select id="country" class="form-input">
+                            <option>United States</option>
+                            <option>Canada</option>
+                            <option>United Kingdom</option>
+                            <option>Australia</option>
+                            <option>Germany</option>
+                            <option>France</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="+1 (555) 123-4567" class="form-input">
+                    </div>
+                </form>
+            </div>
+
+            <!-- Payment Information Section -->
+            <div class="p-6 bg-gray-50 rounded-xl shadow-sm">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Payment Information</h3>
+                <div class="space-y-4 mb-6">
+                    <!-- Credit Card Option -->
+                    <label class="payment-option">
+                        <input type="radio" name="payment-method" value="credit-card" class="mr-3 text-blue-600 focus:ring-blue-500" checked>
+                        <div class="flex items-center flex-grow">
+                            <i class="fas fa-credit-card text-2xl text-blue-600 mr-3"></i>
+                            <span class="font-medium text-gray-800">Credit Card</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <img src="https://placehold.co/40x25/ffffff/000000?text=Visa" alt="Visa" class="h-6 object-contain">
+                            <img src="https://placehold.co/40x25/ffffff/000000?text=MC" alt="Mastercard" class="h-6 object-contain">
+                            <img src="https://placehold.co/40x25/ffffff/000000?text=Amex" alt="Amex" class="h-6 object-contain">
+                        </div>
+                    </label>
+                    <!-- PayPal Option -->
+                    <label class="payment-option">
+                        <input type="radio" name="payment-method" value="paypal" class="mr-3 text-blue-600 focus:ring-blue-500">
+                        <div class="flex items-center flex-grow">
+                            <i class="fab fa-paypal text-2xl text-blue-800 mr-3"></i>
+                            <span class="font-medium text-gray-800">PayPal</span>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Credit Card Details Form (visible if Credit Card selected) -->
+                <div id="credit-card-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2">
+                        <label for="card-number" class="block text-gray-700 font-medium mb-2">Card Number</label>
+                        <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" class="form-input">
+                    </div>
+                    <div>
+                        <label for="expiry-date" class="block text-gray-700 font-medium mb-2">Expiry Date (MM/YY)</label>
+                        <input type="text" id="expiry-date" placeholder="MM/YY" class="form-input">
+                    </div>
+                    <div>
+                        <label for="cvv" class="block text-gray-700 font-medium mb-2">CVV</label>
+                        <input type="text" id="cvv" placeholder="XXX" class="form-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Section: Order Summary -->
+        <div class="lg:w-1/3 p-6 bg-gray-50 rounded-xl shadow-sm">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Order Summary</h3>
+            <div class="space-y-4 text-gray-700">
+                <div class="flex justify-between items-center">
+                    <span>2020 Apple Macbook Pro</span>
+                    <span class="font-semibold">$1699.00</span>
+                </div>
+                <!-- Add more items here if needed -->
+                <!-- <div class="flex justify-between items-center">
+                    <span>Item Name 2</span>
+                    <span class="font-semibold">$X.XX</span>
+                </div> -->
+            </div>
+            <div class="border-t border-gray-200 mt-6 pt-6 space-y-4 text-gray-800">
+                <div class="flex justify-between items-center">
+                    <span>Subtotal:</span>
+                    <span class="font-bold">$1699.00</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Shipping:</span>
+                    <span class="font-bold">$25.00</span>
+                </div>
+                <div class="flex justify-between items-center text-xl font-bold text-gray-900">
+                    <span>Total:</span>
+                    <span>$1724.00</span>
+                </div>
+            </div>
+            <button class="place-order-btn">Place Order</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Basic JavaScript for toggling payment form visibility (if needed)
+            const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+            const creditCardForm = document.getElementById('credit-card-form');
+
+            paymentMethods.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (radio.value === 'credit-card') {
+                        creditCardForm.style.display = 'grid'; // Show as grid
+                    } else {
+                        creditCardForm.style.display = 'none';
+                    }
+                });
+            });
+
+            // Ensure initial state is correct
+            if (document.querySelector('input[name="payment-method"][value="credit-card"]').checked) {
+                creditCardForm.style.display = 'grid';
+            } else {
+                creditCardForm.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
