@@ -28,7 +28,7 @@ mongoose.connect(process.env.Mongo_Url).then(() => {
 })
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 // CORS configuration
 app.use(cors({

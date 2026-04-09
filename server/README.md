@@ -40,7 +40,7 @@ server/
    STRIPE_SECRET_KEY=<your-stripe-key>
    FRONTEND_URL=<your-frontend-url>
    NODE_ENV=production
-   PORT=5000
+   PORT=5001
    ```
 4. Start the server:
    ```bash

@@ -1,0 +1,29 @@
+name: Deploy Server to CapRover
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "server/**"
+      - ".github/workflows/caprover-server-deploy.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create deployment tar from server folder
+        run: tar -cf deploy.tar -C server .
+
+      - name: Deploy to CapRover
+        uses: caprover/deploy-from-github@v1.2.0
+        with:
+          server: '${{ secrets.CAPROVER_SERVER }}'
+          app: '${{ secrets.CAPROVER_APP }}'
+          token: '${{ secrets.CAPROVER_APP_TOKEN }}'

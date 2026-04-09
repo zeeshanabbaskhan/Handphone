@@ -57,7 +57,7 @@ const AdminProductPage = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState(null);
     const [viewProduct, setViewProduct] = useState(null);
-    const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/products";
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api/products";
 
     // Add Product Form State
     const [newProduct, setNewProduct] = useState({
