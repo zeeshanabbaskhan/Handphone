@@ -87,4 +87,4 @@ Pull requests and issues are welcome! Please follow the code style and add tests
 
 ## License
 
-MIT
+
