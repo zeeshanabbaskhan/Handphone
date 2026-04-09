@@ -13,17 +13,47 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CAPROVER_SERVER_URL: ${{ secrets.CAPROVER_SERVER || secrets.CAPROVER_HOST }}
+      CAPROVER_APP_NAME: ${{ secrets.CAPROVER_APP || secrets.APP_NAME }}
+      CAPROVER_TOKEN: ${{ secrets.CAPROVER_APP_TOKEN || secrets.APP_TOKEN }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Validate required CapRover secrets
+        shell: bash
+        run: |
+          if [ -z "$CAPROVER_SERVER_URL" ]; then
+            echo "::error::Missing CapRover server secret. Set CAPROVER_SERVER (or CAPROVER_HOST)."
+            exit 1
+          fi
+
+          if [ -z "$CAPROVER_APP_NAME" ]; then
+            echo "::error::Missing CapRover app secret. Set CAPROVER_APP (or APP_NAME)."
+            exit 1
+          fi
+
+          if [ -z "$CAPROVER_TOKEN" ]; then
+            echo "::error::Missing CapRover token secret. Set CAPROVER_APP_TOKEN (or APP_TOKEN)."
+            exit 1
+          fi
+
       - name: Create deployment tar from server folder
         run: tar -cf deploy.tar -C server .
+
+      - name: Validate deployment archive
+        shell: bash
+        run: |
+          if ! tar -tf deploy.tar | grep -E "^\./captain-definition$|^captain-definition$" >/dev/null; then
+            echo "::error::deploy.tar is missing captain-definition at archive root."
+            exit 1
+          fi
 
       - name: Deploy to CapRover
         uses: caprover/deploy-from-github@v1.2.0
         with:
-          server: '${{ secrets.CAPROVER_SERVER }}'
-          app: '${{ secrets.CAPROVER_APP }}'
-          token: '${{ secrets.CAPROVER_APP_TOKEN }}'
+          server: '${{ env.CAPROVER_SERVER_URL }}'
+          app: '${{ env.CAPROVER_APP_NAME }}'
+          token: '${{ env.CAPROVER_TOKEN }}'
