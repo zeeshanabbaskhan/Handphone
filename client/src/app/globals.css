@@ -133,3 +133,69 @@
 	border-color: #1d4ed8 !important;
 }
 
+.home-hero-card {
+	background:
+		radial-gradient(circle at 18% 22%, rgba(56, 189, 248, 0.22), transparent 48%),
+		radial-gradient(circle at 84% 84%, rgba(30, 64, 175, 0.34), transparent 52%),
+		linear-gradient(135deg, #0b1224 0%, #1e3a8a 52%, #0f172a 100%);
+	border: 1px solid rgba(148, 163, 184, 0.28);
+	box-shadow: 0 24px 58px -32px rgba(2, 6, 23, 0.88), 0 16px 40px -24px rgba(30, 64, 175, 0.72);
+	isolation: isolate;
+}
+
+.home-hero-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 35%);
+	pointer-events: none;
+}
+
+.home-hero-content {
+	text-transform: capitalize;
+}
+
+.home-hero-tag {
+	text-transform: uppercase;
+}
+
+.home-hero-title {
+	text-wrap: balance;
+}
+
+.home-hero-price {
+	letter-spacing: 0.02em;
+}
+
+.home-hero-discount {
+	background-color: rgba(191, 219, 254, 0.16);
+	border: 1px solid rgba(191, 219, 254, 0.35);
+	color: #e0f2fe;
+	text-transform: uppercase;
+}
+
+.home-hero-cta {
+	background-color: #e2e8f0;
+	color: #0f172a;
+	box-shadow: 0 12px 24px -14px rgba(2, 6, 23, 0.85);
+	transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+
+.home-hero-cta:hover {
+	transform: translateY(-1px);
+	background-color: #ffffff;
+	box-shadow: 0 16px 30px -14px rgba(15, 23, 42, 0.9);
+}
+
+.home-hero-image-shell {
+	background: rgba(226, 232, 240, 0.96);
+	border: 1px solid rgba(255, 255, 255, 0.72);
+	box-shadow: 0 22px 45px -28px rgba(2, 6, 23, 0.85);
+}
+
+@media (max-width: 767px) {
+	.home-hero-card {
+		border-radius: 1.1rem;
+	}
+}
+

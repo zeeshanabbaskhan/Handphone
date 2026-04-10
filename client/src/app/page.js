@@ -128,37 +128,39 @@ export default function Home() {
             ))}
           </div>
         ) : fallbackHero && (
-          <div className="relative rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-6 md:p-10 flex flex-col md:flex-row items-center text-white overflow-hidden">
-            <div className="max-w-lg">
-              <p className="uppercase tracking-widest text-xs opacity-80">Featured</p>
-              <h2 className="text-3xl font-bold mt-2">{fallbackHero.name}</h2>
+          <div className="home-hero-card relative rounded-2xl p-6 md:p-10 lg:p-12 flex flex-col md:flex-row items-center text-white overflow-hidden">
+            <div className="home-hero-content relative z-10 max-w-lg">
+              <p className="home-hero-tag text-xs tracking-[0.22em] text-blue-100/80">Featured</p>
+              <h2 className="home-hero-title text-3xl md:text-4xl font-extrabold mt-3 leading-tight">{fallbackHero.name}</h2>
               {fallbackHero.shortDescription && (
-                <p className="mt-3 text-sm text-indigo-100">{fallbackHero.shortDescription}</p>
+                <p className="mt-4 text-sm md:text-base text-slate-100/90 leading-relaxed">{fallbackHero.shortDescription}</p>
               )}
-              <div className="mt-5 flex items-center space-x-4">
-                <span className="text-2xl font-bold">${fallbackHero.price}</span>
+              <div className="mt-6 flex items-center gap-3 flex-wrap">
+                <span className="home-hero-price text-3xl font-bold">${fallbackHero.price}</span>
                 {fallbackHero.discount > 0 && (
-                  <span className="bg-white/15 backdrop-blur px-2 py-1 rounded text-xs">
-                    {fallbackHero.discount}% OFF
+                  <span className="home-hero-discount px-3 py-1 rounded-full text-xs font-semibold">
+                    {fallbackHero.discount}% off
                   </span>
                 )}
               </div>
               <Link
                 href={`/customers/products/details/${fallbackHero._id || fallbackHero.id}`}
-                className={`mt-6 bg-white text-indigo-700 hover:bg-indigo-50 px-6 py-2.5 rounded-md text-sm font-semibold inline-block ${!(fallbackHero._id || fallbackHero.id) ? "pointer-events-none opacity-60" : ""}`}
+                className={`home-hero-cta mt-7 px-7 py-3 rounded-xl text-sm md:text-base font-semibold inline-flex items-center gap-2 ${!(fallbackHero._id || fallbackHero.id) ? "pointer-events-none opacity-60" : ""}`}
               >
                 Shop Now
               </Link>
             </div>
-            <div className="mt-8 md:mt-0 md:ml-auto">
-              <Image
-                src={fallbackHero.images?.[0]?.url || fallbackHero.image || "/placeholder.png"}
-                alt={fallbackHero.name}
-                width={420}
-                height={320}
-                className="object-contain w-[260px] md:w-[340px] lg:w-[420px] h-auto drop-shadow-2xl"
-                priority
-              />
+            <div className="home-hero-media mt-9 md:mt-0 md:ml-auto relative z-10">
+              <div className="home-hero-image-shell p-4 md:p-6 rounded-2xl">
+                <Image
+                  src={fallbackHero.images?.[0]?.url || fallbackHero.image || "/placeholder.png"}
+                  alt={fallbackHero.name}
+                  width={420}
+                  height={320}
+                  className="object-contain w-[250px] md:w-[340px] lg:w-[420px] h-auto drop-shadow-2xl"
+                  priority
+                />
+              </div>
             </div>
           </div>
         )}
