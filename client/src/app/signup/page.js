@@ -30,10 +30,10 @@ const SignupPage = () => {
         <div className="auth-clean-card px-8 py-10">
           {/* Header */}
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-cyan-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold text-blue-300">
               Create Account
             </h1>
-            <p className="mt-3 text-slate-500 text-sm leading-relaxed">
+            <p className="mt-3 text-slate-300 text-sm leading-relaxed">
               Join us and start building. It only takes a moment.
             </p>
           </div>
@@ -41,7 +41,7 @@ const SignupPage = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="name">
+              <label className="block text-sm font-medium text-slate-200 mb-2" htmlFor="name">
                 Full Name
               </label>
               <div className={`auth-clean-input-wrap ${errors.name ? "border-red-500" : ""}`}>
@@ -59,7 +59,7 @@ const SignupPage = () => {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="email">
+              <label className="block text-sm font-medium text-slate-200 mb-2" htmlFor="email">
                 Email
               </label>
               <div className={`auth-clean-input-wrap ${errors.email ? "border-red-500" : ""}`}>
@@ -83,7 +83,7 @@ const SignupPage = () => {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="password">
+              <label className="block text-sm font-medium text-slate-200 mb-2" htmlFor="password">
                 Password
               </label>
               <div className={`auth-clean-input-wrap ${errors.password ? "border-red-500" : ""}`}>
@@ -126,7 +126,7 @@ const SignupPage = () => {
             </button>
 
             {/* Terms */}
-            <p className="text-xs text-slate-500 text-center">
+            <p className="text-xs text-slate-400 text-center">
               By signing up you agree to our{" "}
               <Link href="/terms" className="auth-clean-link underline">
                 Terms
@@ -138,7 +138,7 @@ const SignupPage = () => {
             </p>
 
             {/* Switch */}
-            <div className="pt-2 text-center text-sm text-slate-500">
+            <div className="pt-2 text-center text-sm text-slate-400">
               <span>Already have an account? </span>
               <Link href="/login" className="auth-clean-link font-medium">
                 Login

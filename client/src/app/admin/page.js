@@ -335,13 +335,7 @@ const AdminDashboard = () => {
                                         <XAxis dataKey="name" stroke="#9CA3AF" />
                                         <YAxis stroke="#9CA3AF" />
                                         <Tooltip content={<CustomTooltip />} />
-                                        <defs>
-                                            <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#06B6D4" stopOpacity={0.8} />
-                                                <stop offset="95%" stopColor="#06B6D4" stopOpacity={0.2} />
-                                            </linearGradient>
-                                        </defs>
-                                        <Bar dataKey="orders" fill="url(#colorGradient)" radius={[4, 4, 0, 0]} />
+                                        <Bar dataKey="orders" fill="#1d4ed8" radius={[4, 4, 0, 0]} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             ) : (

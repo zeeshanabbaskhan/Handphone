@@ -792,12 +792,6 @@ const AnalyticsPage = () => {
                                     {analyticsData.revenueTrends.length > 0 ? (
                                         <ResponsiveContainer width="100%" height={300}>
                                             <AreaChart data={analyticsData.revenueTrends}>
-                                                <defs>
-                                                    <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                                                        <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.3} />
-                                                        <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0} />
-                                                    </linearGradient>
-                                                </defs>
                                                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                                                 <XAxis dataKey="name" stroke="#9CA3AF" />
                                                 <YAxis stroke="#9CA3AF" />
@@ -805,9 +799,9 @@ const AnalyticsPage = () => {
                                                 <Area
                                                     type="monotone"
                                                     dataKey={selectedMetric}
-                                                    stroke="#8B5CF6"
+                                                    stroke="#3b82f6"
                                                     strokeWidth={2}
-                                                    fill="url(#revenueGradient)"
+                                                    fill="rgba(59, 130, 246, 0.22)"
                                                 />
                                             </AreaChart>
                                         </ResponsiveContainer>

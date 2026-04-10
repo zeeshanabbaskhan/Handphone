@@ -25,17 +25,17 @@ const LoginPage = () => {
             <div className="w-full max-w-md">
                 <div className="auth-clean-card px-8 py-10">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-cyan-600 bg-clip-text text-transparent">
+                        <h1 className="text-3xl font-bold text-blue-300">
                             Welcome Back
                         </h1>
-                        <p className="mt-3 text-slate-500 text-sm leading-relaxed">
+                        <p className="mt-3 text-slate-300 text-sm leading-relaxed">
                             Log in to continue where you left off. Join the community and explore new features.
                         </p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
+                            <label htmlFor="email" className="block text-sm font-medium text-slate-200 mb-2">
                                 Email
                             </label>
                             <div className="auth-clean-input-wrap">
@@ -60,7 +60,7 @@ const LoginPage = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
+                            <label htmlFor="password" className="block text-sm font-medium text-slate-200 mb-2">
                                 Password
                             </label>
                             <div className="auth-clean-input-wrap">
@@ -96,13 +96,13 @@ const LoginPage = () => {
                             )}
                         </button>
 
-                        <div className="flex items-center justify-between text-xs text-slate-500">
+                        <div className="flex items-center justify-between text-xs text-slate-400">
                             <Link href="/forgot-password" className="auth-clean-link transition-colors">
                                 Forgot password?
                             </Link>
                         </div>
 
-                        <div className="pt-4 text-center text-sm text-slate-500">
+                        <div className="pt-4 text-center text-sm text-slate-400">
                             <span>Don't have an account? </span>
                             <Link href="/signup" className="auth-clean-link font-medium">
                                 Sign Up
