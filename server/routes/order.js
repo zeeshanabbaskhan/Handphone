@@ -7,6 +7,24 @@ const Product = require('../models/product');
 const User = require('../models/user');
 const { checkauth } = require('../middlewares/checkauth');
 
+const normalizeBaseUrl = (value) => {
+    if (!value || typeof value !== 'string') return '';
+    return value.trim().replace(/\/+$/, '');
+};
+
+const getFrontendBaseUrl = (req) => {
+    const requestOrigin = normalizeBaseUrl(req.get('origin'));
+    if (requestOrigin) return requestOrigin;
+
+    const configuredBaseUrl = normalizeBaseUrl(
+        process.env.STRIPE_REDIRECT_BASE_URL || process.env.FRONTEND_URL || process.env.CLIENT_URL
+    );
+
+    if (configuredBaseUrl) return configuredBaseUrl;
+
+    return 'http://localhost:3000';
+};
+
 
 // Add this route to your backend routes/orders.js file
 
@@ -124,10 +142,9 @@ router.post('/create-stripe-checkout', checkauth, async (req, res) => {
             totalAmount: calculatedTotal,
 
         };
-
-
-        console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
-        console.log('Success URL will be:', `${process.env.FRONTEND_URL}/customers/products`);
+        const frontendBaseUrl = getFrontendBaseUrl(req);
+        const successUrl = `${frontendBaseUrl}/customers/products/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
+        const cancelUrl = `${frontendBaseUrl}/customers/products/checkout/error?session_id={CHECKOUT_SESSION_ID}&error_message=Cancelled`;
 
         // STEP 4: Create Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
@@ -142,8 +159,8 @@ router.post('/create-stripe-checkout', checkauth, async (req, res) => {
                 // Store minimal essential data only
                 order_data: JSON.stringify(orderData)
             },
-            success_url: `https://ecommerce-client-roan-one.vercel.app/customers/products/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `https://ecommerce-client-roan-one.vercel.app/customers/products/checkout/error?session_id={CHECKOUT_SESSION_ID}&error_message=Cancelled`,
+            success_url: successUrl,
+            cancel_url: cancelUrl,
             expires_at: Math.floor(Date.now() / 1000) + (30 * 60), // 30 minutes
         });
 
