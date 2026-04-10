@@ -21,34 +21,29 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="min-h-screen relative flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 px-4 py-12">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-32 -left-32 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
-                <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl" />
-            </div>
-
-            <div className="w-full max-w-md relative">
-                <div className="backdrop-blur-xl bg-slate-800/50 border border-slate-700/50 shadow-2xl rounded-2xl px-8 py-10">
+        <div className="auth-clean-bg min-h-screen flex items-center justify-center px-4 py-12">
+            <div className="w-full max-w-md">
+                <div className="auth-clean-card px-8 py-10">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
+                        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-cyan-600 bg-clip-text text-transparent">
                             Welcome Back
                         </h1>
-                        <p className="mt-3 text-slate-400 text-sm leading-relaxed">
+                        <p className="mt-3 text-slate-500 text-sm leading-relaxed">
                             Log in to continue where you left off. Join the community and explore new features.
                         </p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                            <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                                 Email
                             </label>
-                            <div className="flex items-center gap-3 bg-slate-800/60 border border-slate-700 focus-within:border-purple-500 rounded-xl px-4 py-3 transition-colors">
-                                <MdEmail className="text-purple-400 text-xl" />
+                            <div className="auth-clean-input-wrap">
+                                <MdEmail className="text-blue-500 text-xl" />
                                 <input
                                     id="email"
                                     type="text"
-                                    className="w-full bg-transparent outline-none text-slate-200 placeholder-slate-500 text-sm"
+                                    className="auth-clean-input"
                                     placeholder="you@example.com"
                                     {...register("email", {
                                         required: "Email is required",
@@ -65,15 +60,15 @@ const LoginPage = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+                            <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
                                 Password
                             </label>
-                            <div className="flex items-center gap-3 bg-slate-800/60 border border-slate-700 focus-within:border-purple-500 rounded-xl px-4 py-3 transition-colors">
-                                <RiLockPasswordFill className="text-purple-400 text-xl" />
+                            <div className="auth-clean-input-wrap">
+                                <RiLockPasswordFill className="text-blue-500 text-xl" />
                                 <input
                                     id="password"
                                     type="password"
-                                    className="w-full bg-transparent outline-none text-slate-200 placeholder-slate-500 text-sm"
+                                    className="auth-clean-input"
                                     placeholder="••••••••"
                                     {...register("password", {
                                         required: "Password is required",
@@ -89,7 +84,7 @@ const LoginPage = () => {
                         <button
                             type="submit"
                             disabled={isloggingin}
-                            className="w-full relative inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-60 disabled:cursor-not-allowed text-sm font-medium text-white px-6 py-3 shadow-lg shadow-purple-900/40 transition-all"
+                            className="auth-clean-button disabled:opacity-60 disabled:cursor-not-allowed"
                         >
                             {isloggingin ? (
                                 <span className="flex items-center gap-2">
@@ -101,15 +96,15 @@ const LoginPage = () => {
                             )}
                         </button>
 
-                        <div className="flex items-center justify-between text-xs text-slate-400">
-                            <Link href="/forgot-password" className="hover:text-purple-300 transition-colors">
+                        <div className="flex items-center justify-between text-xs text-slate-500">
+                            <Link href="/forgot-password" className="auth-clean-link transition-colors">
                                 Forgot password?
                             </Link>
                         </div>
 
-                        <div className="pt-4 text-center text-sm text-slate-400">
+                        <div className="pt-4 text-center text-sm text-slate-500">
                             <span>Don't have an account? </span>
-                            <Link href="/signup" className="text-purple-300 hover:text-pink-300 font-medium">
+                            <Link href="/signup" className="auth-clean-link font-medium">
                                 Sign Up
                             </Link>
                         </div>

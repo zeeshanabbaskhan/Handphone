@@ -199,7 +199,7 @@ const AdminDashboard = () => {
     // Loading state
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 flex items-center justify-center">
+            <div className="admin-clean min-h-screen flex items-center justify-center">
                 <div className="text-center">
                     <Loader className="w-12 h-12 text-white animate-spin mx-auto mb-4" />
                     <p className="text-white text-lg">Loading dashboard...</p>
@@ -211,15 +211,11 @@ const AdminDashboard = () => {
 
     return (
         <ProtectedRoute>
-        <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
-            <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
-                <div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-pink-500/10 blur-3xl" />
-            </div>
+        <div className="admin-clean min-h-screen">
             <Adminsidebar />
 
             {/* Main Content */}
-            <div className="relative z-10 lg:ml-64">
+            <div className="lg:ml-64">
                 {/* Header */}
                 <header className="bg-slate-800/30 backdrop-blur-xl border-b border-slate-700/50 px-6 py-4">
                     <div className="flex items-center justify-between">
