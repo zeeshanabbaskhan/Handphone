@@ -21,6 +21,7 @@ import {
     Download,
     UserPlus,
     Activity,
+    RefreshCw,
     CreditCard,
     Package2,
     Heart,
@@ -313,12 +314,16 @@ const CustomerManagementPage    = () => {
 
     return (
         <ProtectedRoute>
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+        <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
+                <div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-pink-500/10 blur-3xl" />
+            </div>
             {/* Sidebar */}
             <Adminsidebar />
 
             {/* Main Content */}
-            <div className="lg:ml-64">
+            <div className="relative z-10 lg:ml-64">
                 {/* Header */}
                 <header className="bg-slate-800/30 backdrop-blur-xl border-b border-slate-700/50 px-6 py-4">
                     <div className="flex items-center justify-between">
@@ -332,7 +337,15 @@ const CustomerManagementPage    = () => {
                             <h2 className="text-2xl font-bold text-white">Customers Management</h2>
                         </div>
 
-                       
+                        <div className="flex items-center space-x-4">
+                            <button
+                                onClick={getallcustomers}
+                                className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-xl px-4 py-2 text-sm text-white transition-colors"
+                            >
+                                <RefreshCw className="w-4 h-4" />
+                                <span>Refresh</span>
+                            </button>
+                        </div>
                     </div>
                 </header>
 
@@ -610,8 +623,8 @@ const CustomerManagementPage    = () => {
                     <div className="relative bg-slate-800/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl max-w-2xl w-full p-6">
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-3">
-                                <div className="p-2 bg-blue-500/20 rounded-lg">
-                                    <Mail className="w-6 h-6 text-blue-400" />
+                                <div className="p-2 bg-purple-500/20 rounded-lg">
+                                    <Mail className="w-6 h-6 text-purple-300" />
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-semibold text-white">Send Email</h3>
@@ -634,7 +647,7 @@ const CustomerManagementPage    = () => {
                                     value={emailData.subject}
                                     onChange={(e) => setEmailData({ ...emailData, subject: e.target.value })}
                                     placeholder="Enter email subject..."
-                                    className="w-full bg-slate-700/50 border border-slate-600/50 rounded-xl px-4 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent"
+                                    className="w-full bg-slate-700/50 border border-slate-600/50 rounded-xl px-4 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent"
                                 />
                             </div>
 
@@ -645,7 +658,7 @@ const CustomerManagementPage    = () => {
                                     onChange={(e) => setEmailData({ ...emailData, message: e.target.value })}
                                     placeholder="Type your message here..."
                                     rows={6}
-                                    className="w-full bg-slate-700/50 border border-slate-600/50 rounded-xl px-4 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent resize-none"
+                                    className="w-full bg-slate-700/50 border border-slate-600/50 rounded-xl px-4 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent resize-none"
                                 />
                             </div>
                         </div>
@@ -660,7 +673,7 @@ const CustomerManagementPage    = () => {
                             <button
                                 onClick={sendEmail}
                                 disabled={!emailData.subject.trim() || !emailData.message.trim()}
-                                className="flex-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-xl px-4 py-2 text-sm font-medium hover:bg-blue-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                                className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl px-4 py-2 text-sm font-medium hover:from-purple-600 hover:to-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                             >
                                 <Send className="w-4 h-4" />
                                 <span>Send Email</span>

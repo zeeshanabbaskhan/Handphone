@@ -25,18 +25,18 @@ const SignupPage = () => {
   }
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-950 px-4 py-12">
+    <div className="min-h-screen relative flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 px-4 py-12">
       {/* Decorative blurred blobs (like login) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-32 -left-32 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
+        <div className="absolute -top-32 -left-32 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl" />
       </div>
 
       <div className="w-full max-w-md relative">
-        <div className="backdrop-blur-xl bg-slate-900/70 border border-slate-700/60 shadow-2xl rounded-2xl px-8 py-10">
+        <div className="backdrop-blur-xl bg-slate-800/50 border border-slate-700/50 shadow-2xl rounded-2xl px-8 py-10">
           {/* Header */}
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
               Create Account
             </h1>
             <p className="mt-3 text-slate-400 text-sm leading-relaxed">
@@ -50,8 +50,8 @@ const SignupPage = () => {
               <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="name">
                 Full Name
               </label>
-              <div className={`flex items-center gap-3 bg-slate-800/60 border ${errors.name ? "border-red-500" : "border-slate-700"} focus-within:border-indigo-500 rounded-xl px-4 py-3 transition-colors`}>
-                <FaUser className="text-indigo-400 text-lg" />
+              <div className={`flex items-center gap-3 bg-slate-800/60 border ${errors.name ? "border-red-500" : "border-slate-700"} focus-within:border-purple-500 rounded-xl px-4 py-3 transition-colors`}>
+                <FaUser className="text-purple-400 text-lg" />
                 <input
                   id="name"
                   type="text"
@@ -68,8 +68,8 @@ const SignupPage = () => {
               <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="email">
                 Email
               </label>
-              <div className={`flex items-center gap-3 bg-slate-800/60 border ${errors.email ? "border-red-500" : "border-slate-700"} focus-within:border-indigo-500 rounded-xl px-4 py-3 transition-colors`}>
-                <MdEmail className="text-indigo-400 text-xl" />
+              <div className={`flex items-center gap-3 bg-slate-800/60 border ${errors.email ? "border-red-500" : "border-slate-700"} focus-within:border-purple-500 rounded-xl px-4 py-3 transition-colors`}>
+                <MdEmail className="text-purple-400 text-xl" />
                 <input
                   id="email"
                   type="text"
@@ -92,8 +92,8 @@ const SignupPage = () => {
               <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="password">
                 Password
               </label>
-              <div className={`flex items-center gap-3 bg-slate-800/60 border ${errors.password ? "border-red-500" : "border-slate-700"} focus-within:border-indigo-500 rounded-xl px-4 py-3 transition-colors`}>
-                <RiLockPasswordFill className="text-indigo-400 text-xl" />
+              <div className={`flex items-center gap-3 bg-slate-800/60 border ${errors.password ? "border-red-500" : "border-slate-700"} focus-within:border-purple-500 rounded-xl px-4 py-3 transition-colors`}>
+                <RiLockPasswordFill className="text-purple-400 text-xl" />
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -107,7 +107,7 @@ const SignupPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="text-slate-400 hover:text-indigo-300 transition-colors"
+                  className="text-slate-400 hover:text-purple-300 transition-colors"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -119,7 +119,7 @@ const SignupPage = () => {
             <button
               type="submit"
               disabled={isSigningup}
-              className="w-full relative inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 disabled:opacity-60 disabled:cursor-not-allowed text-sm font-medium text-white px-6 py-3 shadow-lg shadow-indigo-900/40 transition-all"
+              className="w-full relative inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-60 disabled:cursor-not-allowed text-sm font-medium text-white px-6 py-3 shadow-lg shadow-purple-900/40 transition-all"
             >
               {isSigningup ? (
                 <span className="flex items-center gap-2">
@@ -134,11 +134,11 @@ const SignupPage = () => {
             {/* Terms */}
             <p className="text-xs text-slate-500 text-center">
               By signing up you agree to our{" "}
-              <Link href="/terms" className="text-indigo-400 hover:text-indigo-300 underline">
+              <Link href="/terms" className="text-purple-300 hover:text-pink-300 underline">
                 Terms
               </Link>{" "}
               &{" "}
-              <Link href="/privacy" className="text-indigo-400 hover:text-indigo-300 underline">
+              <Link href="/privacy" className="text-purple-300 hover:text-pink-300 underline">
                 Privacy
               </Link>
             </p>
@@ -146,7 +146,7 @@ const SignupPage = () => {
             {/* Switch */}
             <div className="pt-2 text-center text-sm text-slate-400">
               <span>Already have an account? </span>
-              <Link href="/login" className="text-indigo-400 hover:text-indigo-300 font-medium">
+              <Link href="/login" className="text-purple-300 hover:text-pink-300 font-medium">
                 Login
               </Link>
             </div>

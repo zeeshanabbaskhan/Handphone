@@ -211,11 +211,15 @@ const AdminDashboard = () => {
 
     return (
         <ProtectedRoute>
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+        <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl" />
+                <div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-pink-500/10 blur-3xl" />
+            </div>
             <Adminsidebar />
 
             {/* Main Content */}
-            <div className="lg:ml-64">
+            <div className="relative z-10 lg:ml-64">
                 {/* Header */}
                 <header className="bg-slate-800/30 backdrop-blur-xl border-b border-slate-700/50 px-6 py-4">
                     <div className="flex items-center justify-between">
@@ -229,7 +233,16 @@ const AdminDashboard = () => {
                             <h2 className="text-2xl font-bold text-white">Dashboard Overview</h2>
                         </div>
 
-                      
+                        <div className="flex items-center space-x-4">
+                            <button
+                                onClick={() => fetchDashboardData(false)}
+                                disabled={refreshing}
+                                className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-60 disabled:cursor-not-allowed text-white px-4 py-2 rounded-xl font-medium transition-all duration-200"
+                            >
+                                <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+                                <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
+                            </button>
+                        </div>
                     </div>
                 </header>
 
