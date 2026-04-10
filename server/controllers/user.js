@@ -166,15 +166,31 @@ async function getusersforsidebar(req, res) {
 
 
 async function admin(req, res) {
+    const normalizedBody = Object.fromEntries(
+        Object.entries(req.body || {}).map(([key, value]) => [
+            typeof key === 'string' ? key.trim().toLowerCase() : key,
+            value
+        ])
+    );
 
-    const { name, email, password, role } = req.body;
-    console.log(`Registering user with name: ${name}, email: ${email}, role: ${role} and password: ${password}`);
+    const pickValue = (value) => Array.isArray(value) ? value[0] : value;
+
+    const name = String(pickValue(normalizedBody.name || '')).trim();
+    const email = String(pickValue(normalizedBody.email || '')).trim().toLowerCase();
+    const password = String(pickValue(normalizedBody.password || ''));
+    const roleInput = String(pickValue(normalizedBody.role || 'admin')).trim().toLowerCase();
+    const role = roleInput === 'admin' ? 'admin' : 'customer';
+
+    console.log(`Registering user with name: ${name || 'undefined'}, email: ${email || 'undefined'}, role: ${role}`);
     try {
 
-        // if (!name || !email || !password || role) {
-        //     console.log("All fields are required");
-        //     return res.status(400).json({ success: false, message: "All fields are required" });
-        // }
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "name, email and password are required"
+            });
+        }
+
         const existingUser = await user.findOne({ email: email });
 
         if (existingUser) {
