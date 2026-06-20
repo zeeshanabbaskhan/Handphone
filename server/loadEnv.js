@@ -7,7 +7,6 @@ function loadEnvFile(envPath) {
   }
 }
 
-loadEnvFile(path.join(__dirname, '../.env'));
 loadEnvFile(path.join(__dirname, '.env'));
 
 module.exports = {};

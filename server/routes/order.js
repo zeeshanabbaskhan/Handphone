@@ -33,8 +33,7 @@ const getFrontendBaseUrl = (req) => {
 
     if (configuredBaseUrl) return configuredBaseUrl;
 
-    const port = process.env.PORT || 5001;
-    return `http://127.0.0.1:${port}`;
+    return 'http://localhost:3000';
 };
 
 

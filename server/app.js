@@ -12,7 +12,7 @@ const userroute = require('./routes/user');
 const productroute = require('./routes/product');
 const orderroute = require('./routes/order');
 
-function createApp({ nextHandler } = {}) {
+function createApp() {
   const app = express();
   const port = parseInt(process.env.PORT, 10) || 5001;
 
@@ -89,10 +89,6 @@ function createApp({ nextHandler } = {}) {
   app.use('/api/cart', require('./routes/cart'));
   app.use('/api/analytics', require('./routes/analytics'));
   app.use('/api/admin', require('./routes/admin'));
-
-  if (nextHandler) {
-    app.use((req, res) => nextHandler(req, res));
-  }
 
   return app;
 }

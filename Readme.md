@@ -111,100 +111,108 @@ Handphone/
 
 ## Environment Variables
 
-All configuration lives in **one root `.env` file** (local + Vercel).
+Each app has its own env file.
+
+### Server (`server/.env`)
 
 ```bash
+cd server
 cp .env.example .env
 ```
-
-Key variables:
 
 ```env
 Mongo_Url=mongodb+srv://<username>:<password>@<cluster>/<db>
 PORT=5001
 NODE_ENV=development
-FRONTEND_URL=http://localhost:5001
-STRIPE_REDIRECT_BASE_URL=http://localhost:5001
-
+FRONTEND_URL=http://localhost:3000
+STRIPE_REDIRECT_BASE_URL=http://localhost:3000
 STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxx
 STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxx
-
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+```
 
+### Client (`client/.env.local`)
+
+```bash
+cd client
+cp .env.example .env.local
+```
+
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5001
+NEXT_PUBLIC_API_URL=http://localhost:5001/product
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxx
 ```
 
 Notes:
-- API calls use the same origin by default — no `NEXT_PUBLIC_API_BASE_URL` needed for unified local or Vercel deploy.
-- Add the same variables in the **Vercel project dashboard** for production.
-- On Vercel, set `FRONTEND_URL` and `STRIPE_REDIRECT_BASE_URL` to your live domain (e.g. `https://your-app.vercel.app`).
-- Keep production secrets out of source control.
+- In production, set `NEXT_PUBLIC_API_BASE_URL` to your deployed server URL (e.g. `https://api.your-domain.com`).
+- Set server `FRONTEND_URL` to your deployed client URL (e.g. `https://your-app.vercel.app`) for CORS and Stripe redirects.
+- Keep secrets out of source control.
 
 ## Installation
 
-Install dependencies for both apps:
-
 ```bash
 # from repository root
 npm run install:all
 ```
 
-This installs API dependencies at the repo root (required for Vercel) and frontend dependencies in `client/`.
+Or install each app separately:
+
+```bash
+cd server && npm install
+cd ../client && npm install
+```
 
 ## Run the Project Locally
 
-Everything runs from a single server on port `5001` (API + frontend).
+Run backend and frontend in **separate terminals**.
 
-### 1. Install dependencies
-
-```bash
-# from repository root
-npm run install:all
-```
-
-### 2. Configure environment
+### Terminal 1 — Backend API
 
 ```bash
-cp .env.example .env
-# Edit .env with your MongoDB, Stripe, and Cloudinary credentials
-```
-
-### 3. Start the app
-
-Development (hot reload):
-
-```bash
+cd server
+cp .env.example .env   # first time only
 npm run dev
 ```
 
-Production:
+Server: `http://localhost:5001`
+
+### Terminal 2 — Frontend
 
 ```bash
-npm run build
-npm start
+cd client
+cp .env.example .env.local   # first time only
+npm run dev
 ```
 
-App URL: `http://localhost:5001`
+Client: `http://localhost:3000`
+
+Or from repo root:
+
+```bash
+npm run dev:server   # terminal 1
+npm run dev:client   # terminal 2
+```
 
 ## Available Scripts
 
-### Root scripts (recommended)
-- `npm run install:all` - install server and client dependencies
-- `npm run dev` - start unified dev server (API + Next.js)
-- `npm run build` - build the Next.js frontend (loads root `.env`)
-- `npm start` - start unified production server locally
+### Root (convenience)
+- `npm run install:all` — install both apps
+- `npm run dev:server` — start Express API
+- `npm run dev:client` — start Next.js dev server
+- `npm run build:client` — build frontend for production
+- `npm run start:server` — start Express in production mode
 
-### Client scripts
-- `npm run dev` - start Next.js development server (standalone, not recommended)
-- `npm run build` - build production assets
-- `npm run start` - run production Next.js server (standalone, not recommended)
+### Client (`client/`)
+- `npm run dev` — Next.js dev server (port 3000)
+- `npm run build` — production build
+- `npm run start` — production Next.js server
 
-### Server scripts
-- `npm start` - start unified Express + Next.js server
-- `npm run dev` - start unified server in development mode
-- `npm test` - placeholder script (currently not configured for real tests)
+### Server (`server/`)
+- `npm run dev` — start API with Node
+- `npm start` — start API in production mode
 
 ## API Overview
 
@@ -309,61 +317,42 @@ Supported order/payment patterns:
 
 ## Deployment Notes
 
-Before production deployment:
-- Set all variables from `.env.example` in your hosting dashboard.
-- Set `FRONTEND_URL` and `STRIPE_REDIRECT_BASE_URL` to your live domain.
-- Ensure Stripe webhook URL points to `https://your-domain/api/webhook/stripe`.
-- Confirm HTTPS for secure cookies in production.
+Deploy **client** and **server** separately.
 
-## Vercel Deployment (Recommended)
+| App | Suggested platform | Config |
+|---|---|---|
+| `client` | Vercel | Root Directory = `client`, env from `client/.env.example` |
+| `server` | CapRover, Railway, Render | env from `server/.env.example` |
 
-Deploy the full app (Next.js frontend + Express API) with **Root Directory set to `client`**.
+Before production:
+- Set `NEXT_PUBLIC_API_BASE_URL` on the client to your live server URL.
+- Set `FRONTEND_URL` and `STRIPE_REDIRECT_BASE_URL` on the server to your live client URL.
+- Stripe webhook: `https://your-server-domain/api/webhook/stripe`
+- Use HTTPS in production for secure cookies.
 
-### 1) Connect the repo
+## Vercel Deployment (Client)
 
-- Import the GitHub repo in [Vercel](https://vercel.com).
-- Set **Root Directory** to **`client`** (Project Settings → General).
-- Enable **Include source files outside of the Root Directory in the Build Step**.
-- Set **Framework Preset** to **Next.js**.
-- Clear **Output Directory** (leave empty).
-- The Express API runs via `client/pages/api/server.js` with Next.js rewrites (no legacy `builds` config).
+Deploy only the Next.js frontend.
 
-### 2) Add environment variables
+1. Import the repo in [Vercel](https://vercel.com).
+2. Set **Root Directory** to **`client`**.
+3. Set **Framework Preset** to **Next.js**.
+4. Add environment variables from `client/.env.example`:
 
-In Vercel → Project → Settings → Environment Variables, add every variable from `.env.example`:
-
-| Variable | Notes |
+| Variable | Example |
 |---|---|
-| `Mongo_Url` | MongoDB Atlas connection string |
-| `STRIPE_SECRET_KEY` | Stripe secret key |
-| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
-| `CLOUDINARY_*` | Cloudinary credentials |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
-| `FRONTEND_URL` | `https://your-app.vercel.app` |
-| `STRIPE_REDIRECT_BASE_URL` | Same as `FRONTEND_URL` |
-| `NODE_ENV` | `production` |
+| `NEXT_PUBLIC_API_BASE_URL` | `https://your-server.example.com` |
+| `NEXT_PUBLIC_API_URL` | `https://your-server.example.com/product` |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | `pk_test_...` |
 
-### 3) Deploy
+5. Deploy. The client will call your separately hosted API.
 
-Push to `main` or click **Deploy** in Vercel. The build:
+## CapRover Deployment (Server)
 
-1. Installs root + client dependencies
-2. Builds Next.js natively (no legacy `builds` config)
-3. Routes `/user`, `/product`, and `/api` to Express via `pages/api/server.js`
+Deploy only the Express API.
 
-### 4) Stripe webhook
-
-After deploy, set your Stripe webhook endpoint to:
-
-`https://your-app.vercel.app/api/webhook/stripe`
-
-## CapRover Deployment
-
-This repository includes a unified CapRover deployment setup:
-- CapRover app definition: `captain-definition` (repo root)
+- CapRover app definition: `server/captain-definition`
 - GitHub workflow: `.github/workflows/caprover-server-deploy.yml`
-
-The Docker image builds the Next.js frontend and serves it from the Express server.
 
 ### 1) Create CapRover app
 
@@ -392,9 +381,8 @@ In GitHub repository settings, add:
 
 ### 4) Auto-deploy behavior
 
-- The workflow deploys when files under `server/**`, `client/**`, or `captain-definition` change.
-- You can also run deployment manually via `workflow_dispatch`.
-- The workflow packages `server`, `client`, and `captain-definition` into `deploy.tar`, then deploys to CapRover.
+- The workflow deploys when files under `server/**` change.
+- The workflow packages only the `server` folder into `deploy.tar`.
 
 ## Known Implementation Notes
 
