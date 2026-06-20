@@ -18,6 +18,14 @@ function createApp() {
 
   app.set('trust proxy', 1);
 
+  app.get('/', (req, res) => {
+    res.status(200).json({
+      status: 'OK',
+      service: 'Handphone API',
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   app.use(cors({
     origin: (origin, callback) => {
       const allowedOrigins = [

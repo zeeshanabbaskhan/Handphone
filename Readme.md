@@ -302,8 +302,9 @@ Deploy **client** and **server** separately.
 
 | App | Suggested platform | Config |
 |---|---|---|
-| `client` | Vercel | Root Directory = `client`, env from `client/.env.example` |
-| `server` | CapRover, Railway, Render | env from `server/.env.example` |
+| `client` | Vercel | Root Directory = `client` |
+| `server` | CapRover, Railway, Render (recommended) | `server/captain-definition` |
+| `server` | Vercel (serverless) | Root Directory = `server`, `server/vercel.json` |
 
 Before production:
 - Set `NEXT_PUBLIC_API_BASE_URL` on the client to your live server URL.
@@ -327,6 +328,20 @@ Deploy only the Next.js frontend.
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | `pk_test_...` |
 
 5. Deploy. The client will call your separately hosted API.
+
+## Vercel Deployment (Server)
+
+If you deploy the API to Vercel (`handphone-server.vercel.app`):
+
+1. Create a **separate** Vercel project for the server.
+2. Set **Root Directory** to **`server`**.
+3. Set **Framework Preset** to **Other** (uses `server/vercel.json`).
+4. Add all variables from `server/.env.example` (especially `Mongo_Url`).
+5. Set `FRONTEND_URL` to your client URL (e.g. `https://handphone-pink.vercel.app`).
+
+The server exports Express as a serverless function via `server/api/index.js` — do **not** use `app.listen()` on Vercel.
+
+**Note:** CapRover/Railway is better for a long-running API. Vercel serverless can have cold starts and function time limits.
 
 ## CapRover Deployment (Server)
 

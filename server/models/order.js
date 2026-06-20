@@ -242,7 +242,6 @@ orderSchema.index({ 'paymentData.status': 1 });
 orderSchema.index({ 'paymentData.transactionId': 1 });
 orderSchema.index({ createdAt: -1 });
 orderSchema.index({ 'shippingInfo.trackingNumber': 1 });
-orderSchema.index({ orderNumber: 1 }, { unique: true });
 
 // Compound indexes for complex queries
 orderSchema.index({ user: 1, status: 1 });
