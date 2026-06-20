@@ -153,12 +153,7 @@ Notes:
 
 ## Installation
 
-```bash
-# from repository root
-npm run install:all
-```
-
-Or install each app separately:
+Install each app in its own folder:
 
 ```bash
 cd server && npm install
@@ -189,21 +184,7 @@ npm run dev
 
 Client: `http://localhost:3000`
 
-Or from repo root:
-
-```bash
-npm run dev:server   # terminal 1
-npm run dev:client   # terminal 2
-```
-
 ## Available Scripts
-
-### Root (convenience)
-- `npm run install:all` — install both apps
-- `npm run dev:server` — start Express API
-- `npm run dev:client` — start Next.js dev server
-- `npm run build:client` — build frontend for production
-- `npm run start:server` — start Express in production mode
 
 ### Client (`client/`)
 - `npm run dev` — Next.js dev server (port 3000)
