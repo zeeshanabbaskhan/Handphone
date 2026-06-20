@@ -1,4 +1,4 @@
-const createApp = require('../server/app');
+const createApp = require('../../server/app');
 
 const app = createApp();
 

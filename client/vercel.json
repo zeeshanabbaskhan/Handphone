@@ -1,0 +1,14 @@
+{
+  "installCommand": "npm install --prefix .. && npm install",
+  "rewrites": [
+    { "source": "/user/:path*", "destination": "/api" },
+    { "source": "/product/:path*", "destination": "/api" },
+    { "source": "/api/:path*", "destination": "/api" }
+  ],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "../server/**",
+      "maxDuration": 30
+    }
+  }
+}

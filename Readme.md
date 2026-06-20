@@ -317,13 +317,14 @@ Before production deployment:
 
 ## Vercel Deployment (Recommended)
 
-Deploy the full app (Next.js frontend + Express API) from the **repository root**.
+Deploy the full app (Next.js frontend + Express API) with **Root Directory set to `client`**.
 
 ### 1) Connect the repo
 
 - Import the GitHub repo in [Vercel](https://vercel.com).
-- Leave **Root Directory** empty (repo root).
-- Vercel reads `vercel.json` automatically.
+- Go to **Project Settings → General → Root Directory** and set it to **`client`**.
+- Enable **Include source files outside of the Root Directory in the Build Step** (needed for the `server/` API code).
+- Vercel reads `client/vercel.json` automatically.
 
 ### 2) Add environment variables
 
@@ -344,10 +345,10 @@ In Vercel → Project → Settings → Environment Variables, add every variable
 
 Push to `main` or click **Deploy** in Vercel. The build:
 
-1. Installs `server` + `client` dependencies
-2. Builds Next.js from `client/`
-3. Deploys Express API as a serverless function at `api/index.js`
-4. Routes `/user`, `/product`, and `/api` to the API; everything else to Next.js
+1. Installs root + client dependencies
+2. Builds Next.js (native Vercel support)
+3. Deploys Express API as a serverless function at `client/api/index.js`
+4. Rewrites `/user`, `/product`, and `/api` to the API; everything else to Next.js
 
 ### 4) Stripe webhook
 
