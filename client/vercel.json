@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm install --prefix .. && npm install",
+  "functions": {
+    "pages/api/server.js": {
+      "includeFiles": "../server/**",
+      "maxDuration": 30
+    }
+  }
+}

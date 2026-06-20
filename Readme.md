@@ -322,10 +322,11 @@ Deploy the full app (Next.js frontend + Express API) with **Root Directory set t
 ### 1) Connect the repo
 
 - Import the GitHub repo in [Vercel](https://vercel.com).
-- Leave **Root Directory empty** (repo root — default).
-- Go to **Project Settings → General → Framework Preset** and set it to **Other** (Vercel uses `vercel.json` builds config).
-- Go to **Project Settings → General → Output Directory** and **clear it** (leave empty).
-- `vercel.json` at the repo root handles Next.js + Express API routing.
+- Set **Root Directory** to **`client`** (Project Settings → General).
+- Enable **Include source files outside of the Root Directory in the Build Step**.
+- Set **Framework Preset** to **Next.js**.
+- Clear **Output Directory** (leave empty).
+- The Express API runs via `client/pages/api/server.js` with Next.js rewrites (no legacy `builds` config).
 
 ### 2) Add environment variables
 
@@ -347,9 +348,8 @@ In Vercel → Project → Settings → Environment Variables, add every variable
 Push to `main` or click **Deploy** in Vercel. The build:
 
 1. Installs root + client dependencies
-2. Builds Next.js from `client/`
-3. Deploys Express API as a serverless function at `api/index.js`
-4. Routes `/user`, `/product`, and `/api` to the API; everything else to Next.js
+2. Builds Next.js natively (no legacy `builds` config)
+3. Routes `/user`, `/product`, and `/api` to Express via `pages/api/server.js`
 
 ### 4) Stripe webhook
 
