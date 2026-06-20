@@ -106,16 +106,7 @@ const ProductCard = ({
     }
 
     return (
-        <div className="bg-white border rounded-lg p-4 shadow-md hover:shadow-lg transition-all flex flex-col justify-between relative">
-            {/* Out of stock overlay */}
-            {isOutOfStock && (
-                <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-10 rounded-lg">
-                    <span className="bg-red-500 text-white px-4 py-2 rounded-lg font-bold">
-                        OUT OF STOCK
-                    </span>
-                </div>
-            )}
-
+        <div className="bg-white border rounded-lg p-4 shadow-md hover:shadow-lg transition-all flex flex-col justify-between">
             {/* Discount & Tag */}
             <div className="flex items-center justify-between mb-2">
                 {discount && (
@@ -188,15 +179,15 @@ const ProductCard = ({
                     <FaEye className="text-gray-500 text-sm" />
                 </button>
                 <button
-                    className={`${isOutOfStock
-                        ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-orange-500 hover:bg-orange-600'
-                        } text-white text-sm px-4 py-2 rounded ml-auto transition-colors`}
+                    className={`${
+                        isOutOfStock
+                            ? 'bg-red-100 text-red-600 border border-red-300 cursor-not-allowed'
+                            : 'bg-orange-500 hover:bg-orange-600 text-white'
+                    } text-sm px-4 py-2 rounded ml-auto transition-colors`}
                     disabled={isOutOfStock}
                     onClick={handleAddToCart}
                 >
                     {isOutOfStock ? 'OUT OF STOCK' : 'ADD TO CART'}
-
                 </button>
             </div>
 
