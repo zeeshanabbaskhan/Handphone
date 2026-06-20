@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "npm install && npm install --prefix client",
+  "buildCommand": "npm run build --prefix client",
+  "rewrites": [
+    { "source": "/user/:path*", "destination": "/client/api" },
+    { "source": "/product/:path*", "destination": "/client/api" },
+    { "source": "/api/:path*", "destination": "/client/api" }
+  ],
+  "functions": {
+    "client/api/index.js": {
+      "includeFiles": "server/**",
+      "maxDuration": 30
+    }
+  }
+}

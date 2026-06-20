@@ -324,7 +324,9 @@ Deploy the full app (Next.js frontend + Express API) with **Root Directory set t
 - Import the GitHub repo in [Vercel](https://vercel.com).
 - Go to **Project Settings → General → Root Directory** and set it to **`client`**.
 - Enable **Include source files outside of the Root Directory in the Build Step** (needed for the `server/` API code).
-- Vercel reads `client/vercel.json` automatically.
+- Go to **Project Settings → General → Framework Preset** and set it to **Next.js**.
+- Go to **Project Settings → General → Output Directory** and **clear it** (leave empty — do not use `public`).
+- Vercel reads `client/vercel.json` automatically when Root Directory is `client`.
 
 ### 2) Add environment variables
 
