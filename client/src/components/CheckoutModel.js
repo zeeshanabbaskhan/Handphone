@@ -158,21 +158,8 @@ const CheckoutModal = ({
                 customerNotes: ''
             };
 
-            const token = localStorage.getItem('token');
-            const response = await fetch('/api/orders/create-with-mobile-payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(orderData)
-            });
-
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(result.message || 'Mobile payment failed');
-            }
+            const response = await axiosInstance.post('/api/create-with-mobile-payment', orderData);
+            const result = response.data;
 
             return result.data;
         } catch (error) {

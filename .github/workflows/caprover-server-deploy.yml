@@ -1,4 +1,4 @@
-name: Deploy Server to CapRover
+name: Deploy App to CapRover
 
 on:
   push:
@@ -7,6 +7,8 @@ on:
       - master
     paths:
       - "server/**"
+      - "client/**"
+      - "captain-definition"
       - ".github/workflows/caprover-server-deploy.yml"
   workflow_dispatch:
 
@@ -40,13 +42,13 @@ jobs:
             exit 1
           fi
 
-      - name: Create deployment tar from server folder
-        run: tar -cf deploy.tar -C server .
+      - name: Create deployment tar
+        run: tar -cf deploy.tar server client captain-definition
 
       - name: Validate deployment archive
         shell: bash
         run: |
-          if ! tar -tf deploy.tar | grep -E "^\./captain-definition$|^captain-definition$" >/dev/null; then
+          if ! tar -tf deploy.tar | grep -E "^captain-definition$" >/dev/null; then
             echo "::error::deploy.tar is missing captain-definition at archive root."
             exit 1
           fi

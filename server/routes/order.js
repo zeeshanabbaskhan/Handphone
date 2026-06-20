@@ -1,7 +1,18 @@
 // routes/orders.js
 const express = require('express');
 const router = express.Router();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+let stripeClient;
+const getStripe = () => {
+    if (!process.env.STRIPE_SECRET_KEY) {
+        throw new Error('STRIPE_SECRET_KEY is not configured');
+    }
+    if (!stripeClient) {
+        stripeClient = require('stripe')(process.env.STRIPE_SECRET_KEY);
+    }
+    return stripeClient;
+};
+
 const Order = require('../models/order');
 const Product = require('../models/product');
 const User = require('../models/user');
@@ -22,7 +33,8 @@ const getFrontendBaseUrl = (req) => {
 
     if (configuredBaseUrl) return configuredBaseUrl;
 
-    return 'http://localhost:3000';
+    const port = process.env.PORT || 5001;
+    return `http://127.0.0.1:${port}`;
 };
 
 
@@ -147,7 +159,7 @@ router.post('/create-stripe-checkout', checkauth, async (req, res) => {
         const cancelUrl = `${frontendBaseUrl}/customers/products/checkout/error?session_id={CHECKOUT_SESSION_ID}&error_message=Cancelled`;
 
         // STEP 4: Create Stripe Checkout Session
-        const session = await stripe.checkout.sessions.create({
+        const session = await getStripe().checkout.sessions.create({
             payment_method_types: ['card'],
             line_items,
             mode: 'payment',
@@ -197,7 +209,7 @@ router.post('/stripe-success', checkauth, async (req, res) => {
         }
 
         // Retrieve the checkout session
-        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        const session = await getStripe().checkout.sessions.retrieve(sessionId);
 
         if (!session) {
             return res.status(404).json({
@@ -395,7 +407,7 @@ router.post('/confirm-payment', checkauth, async (req, res) => {
         }
 
         // STEP 1: Retrieve and verify payment intent
-        const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+        const paymentIntent = await getStripe().paymentIntents.retrieve(paymentIntentId);
 
         if (!paymentIntent) {
             return res.status(404).json({
@@ -537,7 +549,7 @@ router.post('/confirm-payment', checkauth, async (req, res) => {
 
         // STEP 8: Clean up payment intent metadata (optional)
         try {
-            await stripe.paymentIntents.update(paymentIntentId, {
+            await getStripe().paymentIntents.update(paymentIntentId, {
                 metadata: {
                     user_id: req.user.id,
                     order_id: order._id.toString(),
@@ -1020,7 +1032,7 @@ router.post('/webhook/stripe', express.raw({ type: 'application/json' }), async 
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(
+        event = getStripe().webhooks.constructEvent(
             req.body,
             sig,
             process.env.STRIPE_WEBHOOK_SECRET

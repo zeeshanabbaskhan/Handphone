@@ -7,11 +7,6 @@ import { AlarmClock } from 'lucide-react'
 
 // import { io } from 'socket.io-client'
 
-const BASE_URl = 'http://localhost:5001'
-
-
-
-
 export const userauthstore = create((set, get) => ({
 
 

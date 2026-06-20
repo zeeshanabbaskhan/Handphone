@@ -111,41 +111,35 @@ Handphone/
 
 ## Environment Variables
 
-### Server (`server/.env`)
+All configuration lives in **one root `.env` file** (local + Vercel).
 
-Create `server/.env` and set:
+```bash
+cp .env.example .env
+```
+
+Key variables:
 
 ```env
 Mongo_Url=mongodb+srv://<username>:<password>@<cluster>/<db>
 PORT=5001
 NODE_ENV=development
+FRONTEND_URL=http://localhost:5001
+STRIPE_REDIRECT_BASE_URL=http://localhost:5001
 
-# Frontend URL (used by server logs and intended callback configuration)
-FRONTEND_URL=http://localhost:3000
-
-# Stripe
 STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxx
 STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxx
 
-# Cloudinary
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-```
 
-### Client (`client/.env.local`)
-
-Create `client/.env.local` and set:
-
-```env
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxx
-
-# Used in admin product page fallback logic
-NEXT_PUBLIC_API_URL=http://localhost:5001/api/products
 ```
 
 Notes:
-- Main frontend API calls use the Axios instance base URL currently configured in code.
+- API calls use the same origin by default — no `NEXT_PUBLIC_API_BASE_URL` needed for unified local or Vercel deploy.
+- Add the same variables in the **Vercel project dashboard** for production.
+- On Vercel, set `FRONTEND_URL` and `STRIPE_REDIRECT_BASE_URL` to your live domain (e.g. `https://your-app.vercel.app`).
 - Keep production secrets out of source control.
 
 ## Installation
@@ -163,35 +157,55 @@ npm install
 
 ## Run the Project Locally
 
-Run backend and frontend in separate terminals.
+Everything runs from a single server on port `5001` (API + frontend).
 
-### Terminal 1: Backend API
+### 1. Install dependencies
 
 ```bash
-cd server
-npm start
+# from repository root
+npm run install:all
 ```
 
-Server default: `http://localhost:5001`
-
-### Terminal 2: Frontend app
+### 2. Configure environment
 
 ```bash
-cd client
+cp .env.example .env
+# Edit .env with your MongoDB, Stripe, and Cloudinary credentials
+```
+
+### 3. Start the app
+
+Development (hot reload):
+
+```bash
 npm run dev
 ```
 
-Client default: `http://localhost:3000`
+Production:
+
+```bash
+npm run build
+npm start
+```
+
+App URL: `http://localhost:5001`
 
 ## Available Scripts
 
+### Root scripts (recommended)
+- `npm run install:all` - install server and client dependencies
+- `npm run dev` - start unified dev server (API + Next.js)
+- `npm run build` - build the Next.js frontend (loads root `.env`)
+- `npm start` - start unified production server locally
+
 ### Client scripts
-- `npm run dev` - start Next.js development server
+- `npm run dev` - start Next.js development server (standalone, not recommended)
 - `npm run build` - build production assets
-- `npm run start` - run production Next.js server
+- `npm run start` - run production Next.js server (standalone, not recommended)
 
 ### Server scripts
-- `npm start` - start Express server with Node
+- `npm start` - start unified Express + Next.js server
+- `npm run dev` - start unified server in development mode
 - `npm test` - placeholder script (currently not configured for real tests)
 
 ## API Overview
@@ -298,17 +312,58 @@ Supported order/payment patterns:
 ## Deployment Notes
 
 Before production deployment:
-- Set all environment variables in hosting platforms for both `client` and `server`.
-- Update CORS origin in server config to your real frontend domain.
-- Ensure Stripe success/cancel URLs point to your deployed client URL.
-- Ensure client API base URL points to your deployed backend URL.
+- Set all variables from `.env.example` in your hosting dashboard.
+- Set `FRONTEND_URL` and `STRIPE_REDIRECT_BASE_URL` to your live domain.
+- Ensure Stripe webhook URL points to `https://your-domain/api/webhook/stripe`.
 - Confirm HTTPS for secure cookies in production.
 
-## CapRover Deployment (Server Only)
+## Vercel Deployment (Recommended)
 
-This repository now includes a server-only CapRover deployment setup:
-- CapRover app definition: `server/captain-definition`
+Deploy the full app (Next.js frontend + Express API) from the **repository root**.
+
+### 1) Connect the repo
+
+- Import the GitHub repo in [Vercel](https://vercel.com).
+- Leave **Root Directory** empty (repo root).
+- Vercel reads `vercel.json` automatically.
+
+### 2) Add environment variables
+
+In Vercel → Project → Settings → Environment Variables, add every variable from `.env.example`:
+
+| Variable | Notes |
+|---|---|
+| `Mongo_Url` | MongoDB Atlas connection string |
+| `STRIPE_SECRET_KEY` | Stripe secret key |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
+| `CLOUDINARY_*` | Cloudinary credentials |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
+| `FRONTEND_URL` | `https://your-app.vercel.app` |
+| `STRIPE_REDIRECT_BASE_URL` | Same as `FRONTEND_URL` |
+| `NODE_ENV` | `production` |
+
+### 3) Deploy
+
+Push to `main` or click **Deploy** in Vercel. The build:
+
+1. Installs `server` + `client` dependencies
+2. Builds Next.js from `client/`
+3. Deploys Express API as a serverless function at `api/index.js`
+4. Routes `/user`, `/product`, and `/api` to the API; everything else to Next.js
+
+### 4) Stripe webhook
+
+After deploy, set your Stripe webhook endpoint to:
+
+`https://your-app.vercel.app/api/webhook/stripe`
+
+## CapRover Deployment
+
+This repository includes a unified CapRover deployment setup:
+- CapRover app definition: `captain-definition` (repo root)
 - GitHub workflow: `.github/workflows/caprover-server-deploy.yml`
+
+The Docker image builds the Next.js frontend and serves it from the Express server.
 
 ### 1) Create CapRover app
 
@@ -337,9 +392,9 @@ In GitHub repository settings, add:
 
 ### 4) Auto-deploy behavior
 
-- The workflow deploys only when files under `server/**` change.
+- The workflow deploys when files under `server/**`, `client/**`, or `captain-definition` change.
 - You can also run deployment manually via `workflow_dispatch`.
-- The workflow packages only the `server` folder into `deploy.tar`, then deploys to CapRover.
+- The workflow packages `server`, `client`, and `captain-definition` into `deploy.tar`, then deploys to CapRover.
 
 ## Known Implementation Notes
 
