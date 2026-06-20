@@ -148,12 +148,10 @@ Install dependencies for both apps:
 
 ```bash
 # from repository root
-cd server
-npm install
-
-cd ../client
-npm install
+npm run install:all
 ```
+
+This installs API dependencies at the repo root (required for Vercel) and frontend dependencies in `client/`.
 
 ## Run the Project Locally
 
